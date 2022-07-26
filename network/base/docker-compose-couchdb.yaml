@@ -1,0 +1,24 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+  couchdb.peer0.ecoFarm.example.com:
+        image: hyperledger/fabric-couchdb
+        ports:
+          - "5984:5984"
+
+
+  couchdb.peer0.logisticTrans.example.com:
+        image: hyperledger/fabric-couchdb
+        ports:
+          - "6984:5984"
+
+  couchdb.peer0.ecoMarket.example.com:
+        image: hyperledger/fabric-couchdb
+        ports:
+          - "7984:5984"
+

@@ -1,0 +1,183 @@
+version: '2'
+
+services:
+
+###############################################################
+######################### CA Services #########################
+###############################################################
+  ca.ecoFarm.example.com:
+    extends:
+      file:   base/docker-compose-ca.yaml
+      service: ca.ecoFarm.example.com
+    container_name: ca.ecoFarm.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.18
+
+  ca.logisticTrans.example.com:
+    extends:
+      file:   base/docker-compose-ca.yaml
+      service: ca.logisticTrans.example.com
+    container_name: ca.logisticTrans.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.17
+  ca.ecoMarket.example.com:
+    extends:
+      file:   base/docker-compose-ca.yaml
+      service: ca.ecoMarket.example.com
+    container_name: ca.ecoMarket.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.19
+  
+
+###############################################################
+###################### Ordering Service #######################
+###############################################################
+  orderer0.example.com:
+    extends:
+      file:   base/docker-compose-ordering.yaml
+      service: orderer0.example.com
+    container_name: orderer0.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.16
+
+  orderer1.example.com:
+    extends:
+      file:   base/docker-compose-ordering.yaml
+      service: orderer1.example.com
+    container_name: orderer1.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.15
+
+  orderer2.example.com:
+    extends:
+      file:   base/docker-compose-ordering.yaml
+      service: orderer2.example.com
+    container_name: orderer2.example.com    
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.14
+###############################################################
+############################ Peers ############################
+###############################################################
+  peer0.ecoFarm.example.com:
+    container_name: peer0.ecoFarm.example.com
+    extends:
+      file:  base/docker-compose-peer.yaml
+      service: peer0.ecoFarm.example.com
+    depends_on:
+      - orderer0.example.com
+      - couchdb.peer0.ecoFarm.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.13
+ 
+  peer0.logisticTrans.example.com:
+    container_name: peer0.logisticTrans.example.com
+    extends:
+      file:  base/docker-compose-peer.yaml
+      service: peer0.logisticTrans.example.com
+    depends_on:
+      - orderer0.example.com
+      - couchdb.peer0.logisticTrans.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.10
+  
+  peer0.ecoMarket.example.com:
+    container_name: peer0.ecoMarket.example.com
+    extends:
+      file:  base/docker-compose-peer.yaml
+      service: peer0.ecoMarket.example.com
+    depends_on:
+      - orderer0.example.com
+      - couchdb.peer0.ecoMarket.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.20
+
+
+
+
+###############################################################
+########################## CouchDB ############################
+###############################################################
+  
+  couchdb.peer0.ecoFarm.example.com:
+    container_name: couchdb.peer0.ecoFarm.example.com
+    extends:
+      file:  base/docker-compose-couchdb.yaml
+      service: couchdb.peer0.ecoFarm.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.8
+  
+  couchdb.peer0.logisticTrans.example.com:
+    container_name: couchdb.peer0.logisticTrans.example.com
+    extends:
+      file:  base/docker-compose-couchdb.yaml
+      service: couchdb.peer0.logisticTrans.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.7
+  
+  couchdb.peer0.ecoMarket.example.com:
+    container_name: couchdb.peer0.ecoMarket.example.com
+    extends:
+      file:  base/docker-compose-couchdb.yaml
+      service: couchdb.peer0.ecoMarket.example.com
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.21
+
+
+###############################################################
+############################ CLI ##############################
+############################################################### 
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+     # - CORE_LOGGING_LEVEL=DEBUG
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.ecoFarm.example.com:7051
+      - CORE_PEER_LOCALMSPID=ecoFarmMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ecoFarm.example.com/peers/peer0.ecoFarm.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ecoFarm.example.com/peers/peer0.ecoFarm.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ecoFarm.example.com/peers/peer0.ecoFarm.example.com/tls/ca.crt
+      - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
+      - CORE_PEER_TLS_CLIENTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ecoFarm.example.com/users/Admin@ecoFarm.example.com/tls/client.crt
+      - CORE_PEER_TLS_CLIENTKEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ecoFarm.example.com/users/Admin@ecoFarm.example.com/tls/client.key
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ecoFarm.example.com/users/Admin@ecoFarm.example.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    #command: /bin/bash -c './scripts/script.sh ${CHANNEL_NAME}; sleep $TIMEOUT'
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincodes/:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+        - /Users/mtng/go1.10/src/coren-identitycc:/opt/gopath/src/coren-identitycc
+        - ./crypto-config/:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts/:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - peer0.ecoFarm.example.com
+      
+    networks:
+        hyperledgerfabrictestnet_default:
+          ipv4_address: 10.5.0.2
+
+networks:
+  hyperledgerfabrictestnet_default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

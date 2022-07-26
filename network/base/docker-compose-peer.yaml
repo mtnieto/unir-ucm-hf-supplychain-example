@@ -1,0 +1,83 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+  peer0.ecoFarm.example.com:
+    container_name: peer0.ecoFarm.example.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.ecoFarm.example.com
+      - CORE_PEER_ADDRESS=peer0.ecoFarm.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ecoFarm.example.com:7051
+    #  - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.ecoFarm.example.com:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.ecoFarm.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_LOCALMSPID=ecoFarmMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.ecoFarm.example.com:5984
+
+     
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ecoFarm.example.com/peers/peer0.ecoFarm.example.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ecoFarm.example.com/peers/peer0.ecoFarm.example.com/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 7051:7051
+    
+  
+
+  peer0.logisticTrans.example.com:
+    container_name: peer0.logisticTrans.example.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.logisticTrans.example.com
+      - CORE_PEER_ADDRESS=peer0.logisticTrans.example.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.logisticTrans.example.com:8051
+      - CORE_PEER_LOCALMSPID=logisticTransMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.logisticTrans.example.com:5984
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.logisticTrans.example.com:6051
+
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.logisticTrans.example.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/logisticTrans.example.com/peers/peer0.logisticTrans.example.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/logisticTrans.example.com/peers/peer0.logisticTrans.example.com/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 8051:8051
+  
+  peer0.ecoMarket.example.com:
+    container_name: peer0.ecoMarket.example.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.ecoMarket.example.com
+      - CORE_PEER_ADDRESS=peer0.ecoMarket.example.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ecoMarket.example.com:9051
+      - CORE_PEER_LOCALMSPID=ecoMarketMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.ecoMarket.example.com:5984
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.ecoMarket.example.com:10051
+
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.ecoMarket.example.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ecoMarket.example.com/peers/peer0.ecoMarket.example.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ecoMarket.example.com/peers/peer0.ecoMarket.example.com/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 9051:9051
+ 
+  
