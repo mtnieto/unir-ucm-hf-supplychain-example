@@ -1,0 +1,73 @@
+{
+    "name": "basic-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "ecoFarm",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "channel1": {
+            "orderers": [
+                "orderer0.example.com"
+            ],
+            "peers": {
+                "peer0.ecoFarm.example.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "ecoFarm": {
+            "mspid": "ecoFarmMSP",
+            "peers": [
+                "peer0.ecoFarm.example.com"
+            ],
+            "certificateAuthorities": [
+                "ca.ecoFarm.example.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer0.example.com": {
+            "url": "grpcs://localhost:7050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer0.example.com"
+            },
+            "tlsCACerts": {
+                "path": "../../network/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+            }
+        }
+    },
+
+    "peers": {
+        "peer0.ecoFarm.example.com": {
+            "url": "grpcs://localhost:7051",
+            "tlsCACerts": {
+                "path": "../../network/crypto-config/peerOrganizations/ecoFarm.example.com/peers/peer0.ecoFarm.example.com/tls/ca.crt"
+
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.ecoFarm.example.com",
+                "hostnameOverride": "peer0.ecoFarm.example.com"
+            }
+
+        }
+    },
+    "certificateAuthorities": {
+        "ca.ecoFarm.example.com": {
+            "url": "https://localhost:7054",
+            "caName": "ca.ecoFarm.example.com",
+            "tlsCACerts":  "../../network/crypto-config/peerOrganizations/ecoFarm.example.com/tlsca/tlsca.ecoFarm.example.com-cert.pem",
+            "httpOptions": {
+                "verify": false
+            }
+
+        }
+    }
+}
