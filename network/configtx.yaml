@@ -247,7 +247,7 @@ Application: &ApplicationDefaults
             Rule: "MAJORITY Admins"
         LifecycleEndorsement: # Esto influye en el approve y commit
             Type: Signature
-            Rule: "AND('logisticTransMSP.peer', 'ecoFarmMSP.peer', 'ecoMarketMSP.peer')"
+            Rule: "OR('logisticTransMSP.peer', 'ecoFarmMSP.peer', 'ecoMarketMSP.peer')"
         Endorsement:
             Type: Signature
             Rule: "OR('logisticTransMSP.peer', 'ecoFarmMSP.peer', 'ecoMarketMSP.peer')"
