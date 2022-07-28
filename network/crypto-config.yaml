@@ -1,9 +1,7 @@
 
 
 OrdererOrgs:
-  # ---------------------------------------------------------------------------
-  # Orderer
-  # ---------------------------------------------------------------------------
+
   - Name: Orderer
     Domain: example.com
     CA:
@@ -15,9 +13,7 @@ OrdererOrgs:
       - Hostname: orderer1
       - Hostname: orderer2
     
-# ---------------------------------------------------------------------------
-# "PeerOrgs" - Definition of organizations managing peer nodes
-# ---------------------------------------------------------------------------
+
 PeerOrgs:
   - Name: ecoFarm
     Domain: ecoFarm.example.com
@@ -27,7 +23,7 @@ PeerOrgs:
       Province: Madrid
       Locality: Madrid
     Template:
-      Count: 2
+      Count: 1
     Users:
       Count: 1
  

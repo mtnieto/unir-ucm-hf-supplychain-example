@@ -8,7 +8,7 @@ export CORE_PEER_TLS_ENABLED=true
 export ORDERER_URL=orderer0.example.com:7050
 export CORE_PEER_TLS_CLIENTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.crt
 export CORE_PEER_TLS_CLIENTKEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.key
-export CC_PACKAGE_ID="supplychain:910597559e102bed8de00ddee58fa9c3f2b80b17ba811b6b89158361bb435d23"
+export CC_PACKAGE_ID="supplychain:968aa3ac83c92061660e7f9c2bb21552cef8b34e9b9656cd1ac53231ce7a0461"
 
 peer lifecycle chaincode approveformyorg -o $ORDERER_URL  --ordererTLSHostnameOverride orderer0.example.com  --channelID $CHANNEL_NAME --name supplychain --version 1.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile $ORDERER_CA 
 

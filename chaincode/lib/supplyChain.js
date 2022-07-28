@@ -5,15 +5,7 @@ const { Contract } = require('fabric-contract-api');
 
 class SupplyChain extends Contract {
 
-    
-    async queryCar(ctx, idProduct) {
-        const carAsBytes = await ctx.stub.getState(idProduct); 
-        if (!carAsBytes || carAsBytes.length === 0) {
-            throw new Error(`${idProduct} does not exist`);
-        }
-        console.log(carAsBytes.toString());
-        return carAsBytes.toString();
-    }
+
 
     async registerProductFromFarm(ctx, idProduct, location, details) {
         console.info('============= START : Registering product ===========');
