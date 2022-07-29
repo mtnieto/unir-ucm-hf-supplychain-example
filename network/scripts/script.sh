@@ -6,9 +6,9 @@ sh ./scripts/05-updateAnchor.sh
 sh ./scripts/06-installCCorg1.sh
 sh ./scripts/07-installCCorg2.sh
 sh ./scripts/08-installCCorg3.sh
-# sh ./scripts/09-approveOrg1.sh
-# sh ./scripts/10-approveOrg2.sh
-# sh ./scripts/11-approveOrg3.sh
+sh ./scripts/09-approveOrg1.sh
+sh ./scripts/10-approveOrg2.sh
+sh ./scripts/11-approveOrg3.sh
 # sh ./scripts/12-commitOrg1.sh
 # sh ./scripts/13-invokeCCorg1.sh
  

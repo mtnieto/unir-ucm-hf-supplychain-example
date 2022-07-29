@@ -12,5 +12,5 @@ export CC_PACKAGE_ID="supplychain:968aa3ac83c92061660e7f9c2bb21552cef8b34e9b9656
 
 peer lifecycle chaincode approveformyorg -o $ORDERER_URL  --ordererTLSHostnameOverride orderer0.example.com  --channelID $CHANNEL_NAME --name supplychain --version 1.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile $ORDERER_CA 
 
-peer lifecycle chaincode checkcommitreadiness  --channelID  $CHANNEL_NAME --name supplychain --version 1.0 d --sequence 1 --tls true --cafile $ORDERER_CA --output json
+peer lifecycle chaincode checkcommitreadiness  --channelID  $CHANNEL_NAME --name supplychain --version 1.0  --sequence 1 --tls true --cafile $ORDERER_CA --output json
 
