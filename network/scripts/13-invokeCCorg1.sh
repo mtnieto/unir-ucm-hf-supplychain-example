@@ -10,7 +10,8 @@ CHANNEL_NAME=channel1
 CORE_PEER_TLS_ENABLED=true
 CORE_PEER_TLS_CLIENTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.crt
 CORE_PEER_TLS_CLIENTKEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.key
-export CC_PACKAGE_ID="supplychain:560d95c8ee87e4c6a50b75437103ed066496caf5c9491086f4e3cea85a11d6ed"
+export CC_PACKAGE_ID=supplychain:ba6386878158819c52529858825f87a5a3b2d812d0e60473dc01160df4b3bdaa
+
 
 
 

@@ -64,9 +64,7 @@ function replacePrivateKey () {
 
 function generateCerts(){
 
-    if [ ! -f $GOPATH/bin/cryptogen ]; then
-        go get github.com/hyperledger/fabric/common/tools/cryptogen
-    fi
+  
 
     echo
 	echo "##########################################################"
@@ -76,7 +74,7 @@ function generateCerts(){
 		rm -rf ./crypto-config
 	fi
 
-    $GOPATH/bin/cryptogen generate --config=./crypto-config.yaml
+    cryptogen generate --config=./crypto-config.yaml
     echo
 }
 
@@ -85,10 +83,9 @@ function generateChannelArtifacts(){
 
     if [ ! -d ./channel-artifacts ]; then
 		mkdir channel-artifacts
-	fi
 
-	if [ ! -f $GOPATH/bin/configtxgen ]; then
-        go get github.com/hyperledger/fabric/common/tools/configtxgen
+
+	
     fi
 
     echo
@@ -96,32 +93,32 @@ function generateChannelArtifacts(){
 	echo "### Generating channel configuration transaction 'channel.tx' ###"
 	echo "#################################################################"
 
-    $GOPATH/bin/configtxgen -profile OrdererGenesis -channelID syschain  -outputBlock ./channel-artifacts/genesis.block
+  configtxgen -profile OrdererGenesis -channelID syschain  -outputBlock ./channel-artifacts/genesis.block
     
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for MSP   ##########"
 	echo "#################################################################"
-    $GOPATH/bin/configtxgen -profile channel1 -outputCreateChannelTx ./channel-artifacts/channel1.tx -channelID "channel1"
+   configtxgen -profile channel1 -outputCreateChannelTx ./channel-artifacts/channel1.tx -channelID "channel1"
 
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for ecoFarmMSP   ##########"
 	echo "#################################################################"
-	$GOPATH/bin/configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoFarmMSPanchors.tx -channelID "channel1" -asOrg ecoFarmMSP
+configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoFarmMSPanchors.tx -channelID "channel1" -asOrg ecoFarmMSP
 
 	echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for logisticTransMSP   ##########"
 	echo "#################################################################"
-	$GOPATH/bin/configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/logisticTransMSPanchors.tx -channelID "channel1" -asOrg logisticTransMSP
+	configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/logisticTransMSPanchors.tx -channelID "channel1" -asOrg logisticTransMSP
 	echo
 
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for ecoMarketMSP   ##########"
 	echo "#################################################################"
-	$GOPATH/bin/configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoMarketMSPanchors.tx -channelID "channel1" -asOrg ecoMarketMSP
+	configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoMarketMSPanchors.tx -channelID "channel1" -asOrg ecoMarketMSP
 	echo
 
 }
@@ -135,7 +132,7 @@ function startNetwork() {
     echo
 
     cd "$PROJECT_DIR"
-    docker-compose -f docker-compose.yaml up -d
+    docker compose -f docker-compose.yaml up -d
 }
 
 function cleanConfig() {
@@ -178,7 +175,7 @@ function cleanConfig() {
 }
 
 function cleanNetwork() {
-    docker-compose down
+    docker compose down
 }
 
 function networkStatus() {
