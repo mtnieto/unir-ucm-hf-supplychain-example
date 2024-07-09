@@ -19,15 +19,15 @@ FABRIC_ROOT=$GOPATH/src/github.com/hyperledger/fabric
 
 
 function pullDockerImages(){
-  local FABRIC_TAG="amd64-2.3.0"
+  local FABRIC_TAG="2.5.9"
   for IMAGES in peer orderer ccenv tools; do
       echo "==> FABRIC IMAGE: $IMAGES"
       echo
       docker pull hyperledger/fabric-$IMAGES:$FABRIC_TAG
       docker tag hyperledger/fabric-$IMAGES:$FABRIC_TAG hyperledger/fabric-$IMAGES
   done
-  docker pull hyperledger/fabric-ca:1.4.6
-  local FABRIC_TAG="0.4.18"
+  docker pull hyperledger/fabric-ca:1.5.12
+
 }
 
 function replacePrivateKey () {
@@ -74,7 +74,7 @@ function generateCerts(){
 		rm -rf ./crypto-config
 	fi
 
-    cryptogen generate --config=./crypto-config.yaml
+    $PWD/bin/cryptogen generate --config=./crypto-config.yaml
     echo
 }
 
@@ -93,32 +93,32 @@ function generateChannelArtifacts(){
 	echo "### Generating channel configuration transaction 'channel.tx' ###"
 	echo "#################################################################"
 
-  configtxgen -profile OrdererGenesis -channelID syschain  -outputBlock ./channel-artifacts/genesis.block
+  $PWD/bin/configtxgen -profile OrdererGenesis -channelID syschain  -outputBlock ./channel-artifacts/genesis.block
     
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for MSP   ##########"
 	echo "#################################################################"
-   configtxgen -profile channel1 -outputCreateChannelTx ./channel-artifacts/channel1.tx -channelID "channel1"
+   $PWD/bin/configtxgen -profile channel1 -outputCreateChannelTx ./channel-artifacts/channel1.tx -channelID "channel1"
 
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for ecoFarmMSP   ##########"
 	echo "#################################################################"
-configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoFarmMSPanchors.tx -channelID "channel1" -asOrg ecoFarmMSP
+    $PWD/bin/configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoFarmMSPanchors.tx -channelID "channel1" -asOrg ecoFarmMSP
 
 	echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for logisticTransMSP   ##########"
 	echo "#################################################################"
-	configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/logisticTransMSPanchors.tx -channelID "channel1" -asOrg logisticTransMSP
+	$PWD/bin/configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/logisticTransMSPanchors.tx -channelID "channel1" -asOrg logisticTransMSP
 	echo
 
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for ecoMarketMSP   ##########"
 	echo "#################################################################"
-	configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoMarketMSPanchors.tx -channelID "channel1" -asOrg ecoMarketMSP
+	$PWD/bin/configtxgen -profile channel1 -outputAnchorPeersUpdate ./channel-artifacts/ecoMarketMSPanchors.tx -channelID "channel1" -asOrg ecoMarketMSP
 	echo
 
 }

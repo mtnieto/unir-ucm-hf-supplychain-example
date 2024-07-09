@@ -12,7 +12,7 @@ export PATHCC=/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/n
 
 
 
-peer lifecycle chaincode package chaincode.tar.gz --path $PATHCC --lang node --label supplychain 
+peer lifecycle chaincode package chaincode.tar.gz --path $PATHCC --package test
 
 peer lifecycle chaincode install chaincode.tar.gz 
 
